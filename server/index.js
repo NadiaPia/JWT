@@ -4,7 +4,7 @@ const db = require("./models");
 const { Users } = require("./models");
 const bcrypt = require('bcrypt');   //npm install bcrypt
 const cookieParser = require("cookie-parser");
-const { createTokens } = require("./JWT");
+const { createTokens, validateToken } = require("./JWT");
 
 require("dotenv").config();
 
@@ -45,7 +45,8 @@ app.post("/login", async (req, res) => {
             const accessToken = createTokens(user); //here we create a Token
             //create a cookie in a browser:
             res.cookie("access-token", accessToken, {
-                maxAge: 60*60*24*30*1000                
+                maxAge: 60*60*24*30*1000,
+                httpOnly: true, //will make our cookie not accessable to users: they cannot type in the console.log tab of a browser  somethig like: document.cookies.....   
             }) 
 
             //"access-token" - we give a name of a cookie where wi will store our Token, accessToken, the third argument is an expiration date
@@ -55,7 +56,7 @@ app.post("/login", async (req, res) => {
    
 })
 
-app.get("/profile", (req, res) => {
+app.get("/profile", validateToken, (req, res) => {
     res.json("profile");
 });
 

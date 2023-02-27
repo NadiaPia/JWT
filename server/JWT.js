@@ -12,5 +12,27 @@ const createTokens = (user) => {                   //Token is an object with the
     return accessToken;
 };
 
-module.exports = { createTokens };
+//CREATE MIDDLEWARE (in idealyy should be in it own file)
+
+const validateToken = (req, res, next) => {
+    const accessToken = req.cookies['access-token'] //we check if the cookie was set (if the user logged in);
+    if (!accessToken) {
+        return res.status(400).json({error: "USER NOT AUTHENTICATED!!!"})
+    }
+    try {
+        const validToken = verify(accessToken, process.env.SECRET_KEY);
+        if (validToken) {
+            req.authenticated = true; //push a new key to the request object. now this variable is accessable in the FE
+            //console.log("user.usernameuser.usernameuser.username", user.username)
+            return next()
+        }
+
+    } catch(err) {
+        return res.status(400).json({error: err})
+
+    }
+
+}
+
+module.exports = { createTokens, validateToken };
 
