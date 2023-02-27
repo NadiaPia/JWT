@@ -1,0 +1,27 @@
+
+get http://localhost:3003/profile
+content-Type: application/json
+
+
+###
+
+post http://localhost:3003/register
+content-Type: application/json
+
+{
+    "username":"Nadia",
+    "password":"Password"
+}
+
+###
+
+post http://localhost:3003/login
+content-Type: application/json
+
+{
+    "username":"Nadia",
+    "password":"Password"
+}
+###
+
+
