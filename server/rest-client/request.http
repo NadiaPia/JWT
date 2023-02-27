@@ -9,7 +9,7 @@ post http://localhost:3003/register
 content-Type: application/json
 
 {
-    "username":"Nadia",
+    "username":"Zina",
     "password":"Password"
 }
 
@@ -19,7 +19,7 @@ post http://localhost:3003/login
 content-Type: application/json
 
 {
-    "username":"Nadia",
+    "username":"Zina",
     "password":"Password"
 }
 ###
